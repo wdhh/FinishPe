@@ -50,10 +50,25 @@ my $localHiddenLoggin;
 my $localHiddenPassword;
 my $flagSession;
 
-if(param('logginToDB') eq 'Connect'&& param('logginUser')eq ''&& param('passwordUser')eq '')
+if(param('logginToDB') eq 'Connect')
 {
-	print "<script>alert('Input loggin and password!')</script>";
-	print '<meta http-equiv="Refresh" content="0;url=index.pl">';
+	if (param('logginUser')eq '')
+	{
+		if ( param('passwordUser')eq '')
+		{
+			print "<script>alert('Input loggin and password!')</script>";			
+		}
+		else
+		{
+			print "<script>alert('Input user name!')</script>";			
+		}
+		print '<meta http-equiv="Refresh" content="0;url=index.pl">';
+	}
+	if( param('logginUser')ne ''&& param('passwordUser')eq '')
+	{
+		print "<script>alert('Input password!')</script>";
+		print '<meta http-equiv="Refresh" content="0;url=index.pl">';
+	}	
 }
 
 
@@ -129,7 +144,7 @@ if ($countrow==1)
 		my $localId= ++$countrow[0];
 		my $localCount=$countrow[1];
 		my $resp = get($url.$localId) || die "oops!";
-		
+
 		$resp =~ s/.*\<p class="qt">//gs;
 		$resp =~ s/\<\/p\>.*//gs;
 
@@ -141,15 +156,15 @@ if ($countrow==1)
 				$resp = get($url.$localId) || die "oops!";
 				$resp =~ s/.*\<p class="qt">//gs;
 				$resp =~ s/\<\/p\>.*//gs;
-				
+
 			}
 		}
-		
-		
+
+
 		unless ($resp=~/Quote #[\d]{1,} does not exist./)
 		{
 			$localCount++;
-			
+
 			$sth=$dbh->prepare("UPDATE `UserTableDB` SET `UserTableDB`.`id_of_page` = $localId , `UserTableDB`.`count_of_page`=$localCount WHERE `UserTableDB`.`name` =\"$temp1\" and `UserTableDB`.`password`=\"$temp2\" LIMIT 1 " );
 				$sth->execute();
 			print <<END;
@@ -161,8 +176,8 @@ if ($countrow==1)
 			</fieldset>
 END
 		}
-		
-	
+
+
 	}
 	else
 	{
@@ -170,12 +185,12 @@ END
 		print '<meta http-equiv="Refresh" content="0;url=index.pl">';
 	}
 }
-elsif (param('logginUser')ne '')
+elsif (param('logginUser')ne '' && param('passwordUser')ne '')
 {	
 	print "<script>alert('Oops, user $temp1 dont exist!')</script>";
 	print '<meta http-equiv="Refresh" content="0;url=index.pl">';
 }
-		
+
 
 print <<END;
 	<INPUT TYPE="HIDDEN" NAME="hiddenLoggin" VALUE =$userloggin>
