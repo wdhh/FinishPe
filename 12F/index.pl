@@ -33,9 +33,9 @@ print <<END;
   <p><b>Password:</b><br>
    <input type="password" size="52" name="passwordUser">
   </p>
-  <div style="margin-top: -30px;" 	align="center"><fieldset style="margin:0;width: 160px;height: 20px;">
+  <div style="margin-top: -20px;" 	align="center"><fieldset style="width: 170px;height: 20px;">
 <legend align="left"><h4 style="color:black;"> Session  </h3></legend>
-  <div style="	width: 175px;height: 40px; top: 50%; left: 50%; margin-top: -40px; margin-bottom: -10px;" align="center">
+  <div style="	width: 180px;height: 40px; margin-top: -20px; margin-bottom: 0px;" align="center">
   <p><label>Hidden filds <input type="radio" name="chackBot" value="hidden" checked></label>
   <label>Cookie <input type="radio" name="chackBot" value="cookie"></label></p></fieldset></div>
   <p align="center"><input type="submit" style="background-color:green" name="logginToDB" value="Connect"></p>
